@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  user: one
+  description: MyText
+  servings: 1
+  prep_time: 1
+  prep_time_descriptor: MyString
+  cook_time: 1
+  cook_time_descriptor: MyString
+  rest_time: 1
+  rest_time_descriptor: MyString
+  total_time: 1
+  total_time_descriptor: MyString
+  calories: 1
+
+two:
+  name: MyString
+  user: two
+  description: MyText
+  servings: 1
+  prep_time: 1
+  prep_time_descriptor: MyString
+  cook_time: 1
+  cook_time_descriptor: MyString
+  rest_time: 1
+  rest_time_descriptor: MyString
+  total_time: 1
+  total_time_descriptor: MyString
+  calories: 1
