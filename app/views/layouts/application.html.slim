@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+html
+  head
+    title Happea Cook
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
+
+  body
+		nav.navbar.navbar-default
+			.container
+				.navbar-brand
+					= link_to "Happea Cook", root_path
+				.navbar-nav
+					.navbar-item.navbar-link
+						= link_to 'New Recipe', new_recipe_path
+
+					-if user_signed_in?
+						.navbar-item.navbar-link
+							= link_to 'Edit profile', edit_user_registration_path
+						.navbar-item.navbar-link
+							= link_to "Logout", destroy_user_session_path, method: :delete
+
+					-else
+						.navbar-item.navbar-link
+							= link_to "Login", new_user_session_path
+
+		- if notice
+		  p.alert.alert-success
+				= notice
+		- if alert
+		  p.alert.alert-danger
+				= alert
+
+		.container.content
+			= yield
+
+		footer.footer.mt-auto.py-3

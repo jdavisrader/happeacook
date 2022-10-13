@@ -1,3 +1,62 @@
 // Place all the styles related to the Recipes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+//show all recipes pages
+.recipe_ingredients{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.recipe-box-container{
+	padding: 15px;
+  border: 2px solid rgba(0,0,0,.15);
+  border-radius: 5px;
+	margin-bottom: 10px;
+	height: 160px;
+}
+
+.recipe-name{
+	font-size: 20px;
+}
+
+.recipe-description{
+	font-size: 12px;
+}
+
+.recipe-creator-name{
+	text-decoration: bold;
+}
+
+.recipe-link {
+	margin-right: 5px;
+}
+
+//individual recipe pages
+.recipe-page-container{
+	margin-top: 25px;
+}
+
+.recipe-name-header{
+	margin-bottom: 15px;
+}
+
+.nested-fields{
+	padding: 15px;
+  border: 2px solid rgba(0,0,0,.15);
+  border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.remove_fields{
+	text-decoration: none;
+	margin-left: 5px;
+	color: black;
+}
+a.remove_fields:hover{
+	color: #E55934 !important;
+}
+
+.recipe-info{
+	font-size: 12px;
+}

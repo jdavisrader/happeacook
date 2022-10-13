@@ -1,0 +1,23 @@
+.container
+	.row
+		h1 Recipes
+
+	.row
+		= render 'search_form'
+
+	.row
+		/ = link_to 'New Recipe', new_recipe_path
+		- @recipes.each do |recipe|
+			= link_to recipe, class: "col-lg-4 no-decoration"
+				.recipe-box-container
+					.recipe-name
+						= "#{recipe.name}"
+
+					.recipe-creator
+						= "By "
+
+						b.span.recipe-creator-name
+							= "#{recipe.user.username}"
+
+					.recipe-description
+						= "#{recipe.description.truncate(120, separator: ' ')}"

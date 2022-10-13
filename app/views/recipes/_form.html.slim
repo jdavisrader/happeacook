@@ -1,0 +1,63 @@
+#recipe-form
+	.container
+		= form_with model: @recipe do |f|
+			.row
+				.field.w-100
+					#form-recipe-name
+						=f.label :name
+					=f.text_field :name, class: "form-control"
+
+				.field
+					#form-recipe-description
+						=f.label :description
+					=f.text_area :description, class: "form-control"
+
+				.field
+					#form-recipe-prep-time
+						=f.label :prep_time
+					=f.text_field :prep_time, class: "form-control"
+
+				.field
+					#form-recipe-prep-time
+						=f.label :cook_time
+					=f.text_field :cook_time, class: "form-control"
+
+				.field
+					#form-recipe-prep-time
+						=f.label :rest_time
+					=f.text_field :rest_time, class: "form-control"
+
+				.field
+					#form-recipe-prep-time
+						=f.label :calories
+					=f.text_field :calories, class: "form-control"
+
+			#recipe_ingredients
+				fieldset
+					legend Ingredients
+
+					= f.fields_for :ingredients do |ingredient|
+						= render "ingredient_fields", f: ingredient
+					.links
+						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary"
+
+			#recipe_instructions
+
+				fieldset
+					legend Instructions
+
+
+					= f.fields_for :instructions, @recipe.instructions.order(:step_number) do |instruction|
+						= render "instruction_fields", f: instruction
+					.links
+						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary"
+
+			/ #recipe-categories
+			/ 	fieldset
+			/ 		legend Categories
+			/ 		.field
+			/ 			=f.select :category_ids, Category.all.map { |c| [c.name, c.id] }, {include_blank: false}, {:multiple => true, class: 'chosen-select'}
+
+
+			.actions.mar-top-15
+				= f.submit class: "btn btn-outline-success"
