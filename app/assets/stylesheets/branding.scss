@@ -1,0 +1,53 @@
+nav {
+	background-color: #9BC53D;
+
+	a {
+		text-decoration: none !important;
+	}
+
+	.navbar-nav {
+		flex-direction: row;
+	}
+
+	.navbar-item{
+		margin-left: 10px;
+	}
+
+	.navbar-brand{
+		a {
+			color: #e55934;
+		}
+	}
+}
+
+footer {
+	height: 50px;
+	margin-top: 15px;
+	background-color: #9BC53D;
+}
+
+.content{
+	min-height: 92%;
+}
+
+.w-100{
+	width: 100%;
+}
+.w-90{
+	width: 90%
+}
+
+.mar-top-15{
+	margin-top: 15px;
+}
+
+.mar-right-10{
+	margin-right: 10px;
+}
+
+.no-decoration{
+	text-decoration: none;
+	a:hover {
+		background-color: green;
+	}
+}

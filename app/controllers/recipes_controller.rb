@@ -3,7 +3,9 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index
-    @recipes = Recipe.all
+		@q = Recipe.ransack(params[:q])
+		@recipes = @q.result(distinct: false)
+    # @recipes = Recipe.all
   end
 
   # GET /recipes/1 or /recipes/1.json
@@ -13,6 +15,8 @@ class RecipesController < ApplicationController
   # GET /recipes/new
   def new
     @recipe = Recipe.new
+		@recipe.ingredients.build
+		@recipe.instructions.build
   end
 
   # GET /recipes/1/edit
@@ -22,6 +26,7 @@ class RecipesController < ApplicationController
   # POST /recipes or /recipes.json
   def create
     @recipe = Recipe.new(recipe_params)
+		@recipe.user_id = current_user.id
 
     respond_to do |format|
       if @recipe.save
@@ -36,25 +41,33 @@ class RecipesController < ApplicationController
 
   # PATCH/PUT /recipes/1 or /recipes/1.json
   def update
-    respond_to do |format|
-      if @recipe.update(recipe_params)
-        format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
-        format.json { render :show, status: :ok, location: @recipe }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
-    end
+		if @recipe.user_id == current_user.id
+	    respond_to do |format|
+	      if @recipe.update(recipe_params)
+	        format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
+	        format.json { render :show, status: :ok, location: @recipe }
+	      else
+	        format.html { render :edit, status: :unprocessable_entity }
+	        format.json { render json: @recipe.errors, status: :unprocessable_entity }
+	      end
+	    end
+		else
+			redirect_to @recipe, notice: "You do not have permission to udpate this recipe"
+		end
   end
 
   # DELETE /recipes/1 or /recipes/1.json
   def destroy
-    @recipe.destroy
+		if @recipe.user_id == current_user.id
+	    @recipe.destroy
 
-    respond_to do |format|
-      format.html { redirect_to recipes_url, notice: "Recipe was successfully destroyed." }
-      format.json { head :no_content }
-    end
+	    respond_to do |format|
+	      format.html { redirect_to recipes_url, notice: "Recipe was successfully destroyed." }
+	      format.json { head :no_content }
+	    end
+		else
+			redirect_to @recipe, notice: "You do not have permission to delete this recipe"
+		end
   end
 
   private
@@ -65,6 +78,6 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories)
+      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step])
     end
 end

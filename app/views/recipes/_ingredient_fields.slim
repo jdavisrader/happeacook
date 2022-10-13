@@ -1,0 +1,19 @@
+.nested-fields
+	= f.hidden_field :_destroy
+
+	.field
+		.form-ingredient-measurement
+			= f.label :measurement
+		= f.text_field :measurement, class: "w-100"
+
+	.field
+		.form-ingredient-name
+			= f.label :name
+		= f.text_field :name, class: "w-100"
+
+	.field
+		.form-order-number
+			= f.label :order_number
+		= f.number_field :order_number
+
+		= link_to_remove_association "", f, class: "remove_fields fa-regular fa-circle-xmark"
