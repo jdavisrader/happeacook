@@ -1,14 +1,22 @@
 .nested-fields
 	= f.hidden_field :_destroy
 
-	.field
-		.form-step-number
-			= f.label :step_number
-		= f.number_field :step_number
+	/ .field
+	/ 	.form-step-number
+	/ 		= f.label :step_number
+	/ 	= f.number_field :step_number
+	/
+	/ .field
+	/ 	.form-step-instruction
+	/ 		= f.label :step
+	/ 	= f.text_area :step, class: "w-90"
+	/
+	/ 	= link_to_remove_association "", f, class: "remove_fields fa-regular fa-circle-xmark"
 
-	.field
-		.form-step-instruction
-			= f.label :step
-		= f.text_area :step, class: "w-90"
 
-		= link_to_remove_association "", f, class: "remove_fields fa-regular fa-circle-xmark"
+	.row
+	.col-2
+		= f.number_field :step_number, placeholder: "#", class: "form-control"
+	.col.input-group
+		= f.text_area :step, placeholder: "Step", class: "form-control"
+		= link_to_remove_association "X", f, class: "remove_fields btn btn-outline-secondary"

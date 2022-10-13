@@ -5,32 +5,32 @@
 				.field.w-100
 					#form-recipe-name
 						=f.label :name
-					=f.text_field :name, class: "w-100"
+					=f.text_field :name, class: "form-control"
 
 				.field
 					#form-recipe-description
 						=f.label :description
-					=f.text_area :description, class: "w-100"
+					=f.text_area :description, class: "form-control"
 
 				.field
 					#form-recipe-prep-time
 						=f.label :prep_time
-					=f.text_field :prep_time, class: "w-100"
+					=f.text_field :prep_time, class: "form-control"
 
 				.field
 					#form-recipe-prep-time
 						=f.label :cook_time
-					=f.text_field :cook_time, class: "w-100"
+					=f.text_field :cook_time, class: "form-control"
 
 				.field
 					#form-recipe-prep-time
 						=f.label :rest_time
-					=f.text_field :rest_time, class: "w-100"
+					=f.text_field :rest_time, class: "form-control"
 
 				.field
 					#form-recipe-prep-time
 						=f.label :calories
-					=f.text_field :calories, class: "w-100"
+					=f.text_field :calories, class: "form-control"
 
 			#recipe_ingredients
 				fieldset
@@ -39,7 +39,7 @@
 					= f.fields_for :ingredients do |ingredient|
 						= render "ingredient_fields", f: ingredient
 					.links
-						= link_to_add_association "Add Ingredient", f, :ingredients
+						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary"
 
 			#recipe_instructions
 
@@ -50,7 +50,7 @@
 					= f.fields_for :instructions, @recipe.instructions.order(:step_number) do |instruction|
 						= render "instruction_fields", f: instruction
 					.links
-						= link_to_add_association "Add Step", f, :instructions
+						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary"
 
 			/ #recipe-categories
 			/ 	fieldset
@@ -60,92 +60,4 @@
 
 
 			.actions.mar-top-15
-				= f.submit
-
-
-
-
-
-
-/ <%= form_with(model: recipe) do |form| %>
-/   <% if recipe.errors.any? %>
-/     <div id="error_explanation">
-/       <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
-/
-/       <ul>
-/         <% recipe.errors.each do |error| %>
-/           <li><%= error.full_message %></li>
-/         <% end %>
-/       </ul>
-/     </div>
-/   <% end %>
-/
-/   <div class="field">
-/     <%= form.label :name %>
-/     <%= form.text_field :name %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :user_id %>
-/     <%= form.text_field :user_id %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :description %>
-/     <%= form.text_area :description %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :servings %>
-/     <%= form.number_field :servings %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :prep_time %>
-/     <%= form.number_field :prep_time %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :prep_time_descriptor %>
-/     <%= form.text_field :prep_time_descriptor %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :cook_time %>
-/     <%= form.number_field :cook_time %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :cook_time_descriptor %>
-/     <%= form.text_field :cook_time_descriptor %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :rest_time %>
-/     <%= form.number_field :rest_time %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :rest_time_descriptor %>
-/     <%= form.text_field :rest_time_descriptor %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :total_time %>
-/     <%= form.number_field :total_time %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :total_time_descriptor %>
-/     <%= form.text_field :total_time_descriptor %>
-/   </div>
-/
-/   <div class="field">
-/     <%= form.label :calories %>
-/     <%= form.number_field :calories %>
-/   </div>
-/
-/   <div class="actions">
-/     <%= form.submit %>
-/   </div>
-/ <% end %>
+				= f.submit class: "btn btn-outline-success"
