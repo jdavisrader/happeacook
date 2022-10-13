@@ -52,11 +52,11 @@
 					.links
 						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary"
 
-			/ #recipe-categories
-			/ 	fieldset
-			/ 		legend Categories
-			/ 		.field
-			/ 			=f.select :category_ids, Category.all.map { |c| [c.name, c.id] }, {include_blank: false}, {:multiple => true, class: 'chosen-select'}
+			#recipe-tags
+				fieldset
+					legend Tags
+					.field
+						=f.select :tag_ids, Tag.all.map { |t| [t.name, t.id] }, {include_blank: false}, {:multiple => true, class: 'tag-multiple form-control'}
 
 
 			.actions.mar-top-15

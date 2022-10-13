@@ -18,6 +18,11 @@
 				p
 					=@recipe.description
 
+				.row
+					.container
+						- @recipe.tags.each do |tag|
+							span.badge.rounded-pill.bg-secondary.me-1
+								= "#{tag.name}"
 
 				.row
 					.col-lg-12

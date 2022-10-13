@@ -17,12 +17,15 @@ ActiveStorage.start()
 // Stuff that I've added
 require("@popperjs/core")
 require("jquery")
+require("select2")
+
 
 import "bootstrap"
 import "cocoon";
 
 // Import the specific modules you may need (Modal, Alert, etc)
 import { Tooltip, Popover, Dropdown } from "bootstrap"
+
 
 // The stylesheet location we created earlier
 // This might be requi
@@ -41,4 +44,6 @@ document.addEventListener("turbolinks:load", () => {
     var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
         return new Popover(popoverTriggerEl)
     })
+
+		$('.tag-multiple').select2();
 })
