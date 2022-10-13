@@ -1,6 +1,5 @@
-= search_form_for @q do |f|
-
-  = f.search_field :name_or_description_cont, placeholder: "Search for a recipe!", class: "mar-right-10"
-
-  = f.submit
-end
+= search_form_for @q, class: "row row-cols-lg-auto g-3 align-items-center" do |f|
+	.row.mb-2
+		.input-group
+		  = f.search_field :name_or_description_cont, placeholder: "Search for a recipe!", class: "form-control"
+		  = f.submit class: "btn btn-outline-secondary"
