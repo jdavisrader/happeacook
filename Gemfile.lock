@@ -84,18 +84,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (4.1.0)
-    chosen-rails (1.10.0)
-      coffee-rails (>= 3.2)
-      railties (>= 3.0)
-      sassc-rails (>= 2.1.2)
     cocoon (1.2.15)
-    coffee-rails (5.0.0)
-      coffee-script (>= 2.2.0)
-      railties (>= 5.2.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     devise (4.8.1)
@@ -208,6 +197,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    select2-rails (4.0.13)
     selenium-webdriver (4.5.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -266,7 +256,6 @@ DEPENDENCIES
   bootstrap (~> 5.1, >= 5.1.3)
   byebug
   capybara (>= 3.26)
-  chosen-rails
   cocoon
   devise
   font-awesome-sass (~> 6.1.1)
@@ -280,6 +269,7 @@ DEPENDENCIES
   rails (~> 6.1.7)
   ransack
   sass-rails (>= 6)
+  select2-rails
   selenium-webdriver (>= 4.0.0.rc1)
   slim
   spring
