@@ -12,4 +12,11 @@
  *
  *= require_tree .
  *= require_self
+ *= require select2
  */
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "font-awesome";
+
+@import "recipes";
+@import "branding";

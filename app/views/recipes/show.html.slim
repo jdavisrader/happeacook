@@ -1,0 +1,73 @@
+.recipe-page-container
+	.container
+		.row
+			.col-sm-3
+			.col-lg-6
+				h1.recipe-name-header
+					= @recipe.name
+
+				.recipe-creator
+					= "By "
+					- if @recipe.user_id.nil?
+						= "Nobody"
+					-else
+
+						b.span.recipe-creator-name
+							= "#{@recipe.user.username}"
+
+				p
+					=@recipe.description
+
+				.row
+					.container
+						- @recipe.tags.each do |tag|
+							span.badge.rounded-pill.bg-secondary.me-1
+								= "#{tag.name}"
+
+				.row
+					.col-lg-12
+						.recipe-info
+							- if @recipe.servings.present?
+								.recipe-info-detail
+								= "Servings: #{@recipe.servings}"
+							- if @recipe.prep_time.present?
+								.recipe-info-detail
+									= "Prep Time: #{@recipe.prep_time.to_i}"
+							- if @recipe.cook_time.present?
+								.recipe-info-detail
+									= "Cook Time: #{@recipe.cook_time.to_i}"
+							- if @recipe.rest_time.present?
+								.recipe-info-detail
+									= "Rest Time: #{@recipe.rest_time.to_i}"
+							- if @recipe.total_time.present?
+								.recipe-info-detail
+									= "Total Time: #{@recipe.total_time.to_i}"
+							- if @recipe.calories.present?
+								.recipe-info-detail
+									= "Calories: #{@recipe.calories}"
+
+				.row
+					.col-lg-12
+						.recipe_ingredients
+							= "Ingredients"
+							ul
+								- @recipe.ingredients.order(:order_number).each do |ingredient|
+									/ .recipe_ingredient_name
+									li
+										="#{ingredient.measurement} #{ingredient.name} "
+
+						.recipe_instructions
+							= "Instructions"
+							ol
+								- @recipe.instructions.order(:step_number).each do |instruction|
+									li = "#{instruction.step}"
+
+
+
+
+						.recipe_links
+							-if user_signed_in? && @recipe.user_id == current_user.id
+								=link_to 'Edit |', edit_recipe_path(@recipe)
+							=link_to ' Back', recipes_path
+
+		.col-sm-3
