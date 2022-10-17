@@ -9,7 +9,9 @@ gem 'rails', '~> 6.1.7'
 # gem 'sqlite3', '~> 1.4'
 # use postgres as the database
 gem 'pg'
-gem 'net-smtp', '~> 0.2.1'
+gem 'net-smtp', '~> 0.2.1', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
