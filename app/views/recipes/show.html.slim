@@ -19,7 +19,7 @@
 					=@recipe.description
 
 				.row
-					.container
+					.container.mb-2
 						- @recipe.tags.each do |tag|
 							span.badge.rounded-pill.bg-secondary.me-1
 								= "#{tag.name}"
@@ -32,13 +32,13 @@
 								= "Servings: #{@recipe.servings}"
 							- if @recipe.prep_time.present?
 								.recipe-info-detail
-									= "Prep Time: #{@recipe.prep_time.to_i}"
+									= "Prep Time: #{display_time(@recipe.prep_time)} #{@recipe.prep_time_descriptor}"
 							- if @recipe.cook_time.present?
 								.recipe-info-detail
-									= "Cook Time: #{@recipe.cook_time.to_i}"
+									= "Cook Time: #{display_time(@recipe.cook_time)} #{@recipe.cook_time_descriptor}"
 							- if @recipe.rest_time.present?
 								.recipe-info-detail
-									= "Rest Time: #{@recipe.rest_time.to_i}"
+									= "Rest Time: #{display_time(@recipe.rest_time)} #{@recipe.rest_time_descriptor}"
 							- if @recipe.total_time.present?
 								.recipe-info-detail
 									= "Total Time: #{@recipe.total_time.to_i}"

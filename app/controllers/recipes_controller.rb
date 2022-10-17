@@ -27,6 +27,17 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
 		@recipe.user_id = current_user.id
+		debugger
+		total_time = total_time(recipe_params[:prep_time], recipe_params[:prep_time_descriptor], recipe_params[:cook_time], recipe_params[:cook_time_descriptor], recipe_params[:rest_time], recipe_params[:rest_time_descriptor])
+
+		if total_time > 60
+			@recipe.total_time = total_time/60
+			@recipe.total_time_descriptor = "hr"
+		else
+			@recipe.total_time = total_time
+			@recipe.total_time_descriptor = "min"
+		end
+
 
     respond_to do |format|
       if @recipe.save
@@ -80,4 +91,19 @@ class RecipesController < ApplicationController
     def recipe_params
       params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step])
     end
+
+
+		def total_time(ptime, ptd, ctime, ctd, rtime, rtd)
+			if ptd == "hr"
+				ptime = ptime.to_f * 60
+			end
+			if ctd == "hr"
+				ctime = ctime.to_f * 60
+			end
+			if rtd == "hr"
+				rtime = rtime.to_f * 60
+			end
+			total_time = ptime.to_f + ctime.to_f + rtime.to_f
+		end
+
 end
