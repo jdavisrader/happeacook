@@ -39,9 +39,8 @@
 							- if @recipe.rest_time.present?
 								.recipe-info-detail
 									= "Rest Time: #{display_time(@recipe.rest_time)} #{@recipe.rest_time_descriptor}"
-							- if @recipe.total_time.present?
-								.recipe-info-detail
-									= "Total Time: #{@recipe.total_time.to_i}"
+							.recipe-info-detail
+								= "Total Time: #{total_time_display(@recipe.prep_time, @recipe.prep_time_descriptor, @recipe.cook_time, @recipe.cook_time_descriptor, @recipe.rest_time, @recipe.rest_time_descriptor)}"
 							- if @recipe.calories.present?
 								.recipe-info-detail
 									= "Calories: #{@recipe.calories}"
