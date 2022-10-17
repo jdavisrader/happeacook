@@ -13,19 +13,33 @@
 					=f.text_area :description, class: "form-control"
 
 				.field
-					#form-recipe-prep-time
+					#form-recipe-prep-time.input-group
 						=f.label :prep_time
-					=f.text_field :prep_time, class: "form-control"
+					.row
+						.col
+							=f.number_field :prep_time, step: 0.25, class: "form-control"
+						.col-3
+							=f.select :prep_time_descriptor, ["min", "hr"], {},  class: "form-select"
 
 				.field
 					#form-recipe-prep-time
 						=f.label :cook_time
-					=f.text_field :cook_time, class: "form-control"
+					.row
+						.col
+							=f.number_field :cook_time, step: 0.25, class: "form-control"
+						.col-3
+							=f.select :cook_time_descriptor, ["min", "hr"], {},  class: "form-select"
+
 
 				.field
 					#form-recipe-prep-time
 						=f.label :rest_time
-					=f.text_field :rest_time, class: "form-control"
+					.row
+						.col
+							=f.number_field :rest_time, step: 0.25, class: "form-control"
+						.col-3
+							=f.select :rest_time_descriptor, ["min", "hr"], {},  class: "form-select"
+
 
 				.field
 					#form-recipe-prep-time

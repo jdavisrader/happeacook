@@ -28,5 +28,5 @@ production:
   <<: *default
   database: happeacook_production
   host: localhost
-  username: happeacook
-  password: prodhappeacook
+  username: happeacookprod
+  password: DragonflyBossLukewarmBlankRavenUntrained
