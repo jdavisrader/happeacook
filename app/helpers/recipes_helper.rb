@@ -11,4 +11,31 @@ module RecipesHelper
 				display_time = "#{whole_number}"
 			end
 		end
+
+
+		def total_time_display(ptime, ptd, ctime, ctd, rtime, rtd)
+			if ptd == "hr"
+				ptime = ptime.to_f * 60
+			end
+			if ctd == "hr"
+				ctime = ctime.to_f * 60
+			end
+			if rtd == "hr"
+				rtime = rtime.to_f * 60
+			end
+			total_time = ptime.to_f + ctime.to_f + rtime.to_f
+
+			if total_time > 60
+				hours = (total_time / 60).to_i
+				minutes = (total_time % 60).to_i
+				if hours > 1
+					total_time_descriptor = "#{hours} hr(s) #{minutes} min"
+				else
+					total_time_descriptor = "#{hours} hr #{minutes} min"
+				end
+			else
+				total_time_description = "#{total_time.to_i} min"
+			end
+
+		end
 end

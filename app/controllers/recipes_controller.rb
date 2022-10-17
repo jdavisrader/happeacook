@@ -27,7 +27,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
 		@recipe.user_id = current_user.id
-		debugger
+
 		total_time = total_time(recipe_params[:prep_time], recipe_params[:prep_time_descriptor], recipe_params[:cook_time], recipe_params[:cook_time_descriptor], recipe_params[:rest_time], recipe_params[:rest_time_descriptor])
 
 		if total_time > 60
