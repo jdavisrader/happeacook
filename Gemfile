@@ -39,7 +39,7 @@ gem 'devise'
 gem 'slim'
 # gem 'simple_form'
 gem 'cocoon'
-gem 'bootstrap', '~> 5.1', '>= 5.1.3'
+# gem 'bootstrap', '~> 5.1', '>= 5.1.3'
 gem 'jquery-rails'
 gem "font-awesome-sass", "~> 6.1.1"
 gem 'ransack'
