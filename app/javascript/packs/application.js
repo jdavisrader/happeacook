@@ -25,9 +25,18 @@ import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap'
 require("stylesheets/application.scss")
 
+import Sortable from 'sortablejs';
+
 
 // If you're using Turbolinks. Otherwise simply use: jQuery(function () {
 document.addEventListener("turbolinks:load", () => {
+		var el = document.getElementById('sort-ingredients');
+		var sortable = Sortable.create(el);
+
+		document.getElementById('add-linked-ingredients').addEventListener("click", () =>{
+			var el = document.getElementById('sort-ingredients');
+			var sortable = Sortable.create(el);
+		})
     // Both of these are from the Bootstrap 5 docs
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
