@@ -15,22 +15,16 @@ ActiveStorage.start()
 
 
 // Stuff that I've added
-require("@popperjs/core")
-require("jquery")
+// require("@popperjs/core")
+// require("jquery")
 require("select2")
 
-
-import "bootstrap"
 import "cocoon";
 
-// Import the specific modules you may need (Modal, Alert, etc)
-import { Tooltip, Popover, Dropdown } from "bootstrap"
+import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/dist/css/bootstrap'
+require("stylesheets/application.scss")
 
-
-// The stylesheet location we created earlier
-// This might be requi
-// TODO
-// require("../../../stylesheets/application.scss")
 
 // If you're using Turbolinks. Otherwise simply use: jQuery(function () {
 document.addEventListener("turbolinks:load", () => {

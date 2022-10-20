@@ -1,23 +1,29 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  a.navbar-brand href=(root_url) Landing Page
-  button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-    span.navbar-toggler-icon
+nav.navbar.navbar-expand-lg
+  .container-fluid
+		.navbar-brand
+			= link_to "Happea Cook", root_path
 
+		.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+			span.navbar-toggler-icon
 
-  ul.navbar-nav.mr-auto
-    li.nav-item.dropdown
-      a.nav-link.dropdown-toggle href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" Dropdown
-      ul.dropdown-menu.multi-column.columns-2
-        .row
-          .col-sm-6
-            ul.multi-column-dropdown
-              a.dropdown-item href="#" Action
-              a.dropdown-item href="#" Another action
-              div.dropdown-divider
-              a.dropdown-item href="#" Something else here
-          .col-sm-6
-            ul.multi-column-dropdown
-              a.dropdown-item href="#" Action
-              a.dropdown-item href="#" Another action
-              div.dropdown-divider
-              a.dropdown-item href="#" Something else here
+		#navbarSupportedContent.collapse.navbar-collapse
+			ul.navbar-nav.me-auto.mb-2.mb-lg-0
+				li.nav-item
+					.nav-link
+						=link_to "Recipes", recipes_path
+				li.nav-item
+					.nav-link
+						=link_to "Categories", tags_path
+
+				li.nav-item.dropdown
+					a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" Account
+					ul.dropdown-menu
+						-if user_signed_in?
+							li.dropdown-item
+								= link_to 'Edit profile', edit_user_registration_path
+							li.dropdown-item
+								= link_to "Logout", destroy_user_session_path, method: :delete
+
+						-else
+							li.dropdown-item
+								= link_to "Login", new_user_session_path
