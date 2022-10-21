@@ -28,5 +28,5 @@ nav.navbar.navbar-expand-lg
 								= link_to "Logout", destroy_user_session_path, method: :delete
 
 						-else
-							li :q.dropdown-item
+							li.dropdown-item
 								= link_to "Login", new_user_session_path
