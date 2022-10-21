@@ -7,7 +7,6 @@ function setIngredientOrder(){
 			var index = Array.prototype.indexOf.call(ingredientList.children, ingredients[i]);
 			var position = ingredients[i].querySelector('.position');
 			position.value = index;
-			console.log(position.value);
 		}
 	}
 };
@@ -21,7 +20,6 @@ function setInstructionOrder(){
 			var index = Array.prototype.indexOf.call(instructionList.children, instruction[i]);
 			var position = instruction[i].querySelector('.position');
 			position.value = index;
-			console.log(position.value);
 		}
 	}
 };
