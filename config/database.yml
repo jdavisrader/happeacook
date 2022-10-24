@@ -29,7 +29,7 @@ production:
   host: localhost
   adapter: postgresql
   encoding: utf8
-  database: appname_production
+  database: happeacook_production
   pool: 5
   username: happeacookprod
   password: DragonflyBossLukewarmBlankRavenUntrained
