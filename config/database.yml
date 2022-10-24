@@ -26,7 +26,10 @@ test:
 
 production:
   <<: *default
-  database: happeacook_production
   host: localhost
-  username: happeacookprod
-  password: DragonflyBossLukewarmBlankRavenUntrained
+  adapter: postgresql
+  encoding: utf8
+  database: appname_production
+  pool: 5
+  username: <%= ENV['HAPPEACOOK_DATABASE_USER'] %>
+  password: <%= ENV['HAPPEACOOK_DATABASE_PASSWORD'] %>
