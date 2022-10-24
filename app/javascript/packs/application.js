@@ -16,7 +16,7 @@ ActiveStorage.start()
 
 // Stuff that I've added
 // require("@popperjs/core")
-// require("jquery")
+require("jquery")
 require("select2")
 
 import "cocoon";
