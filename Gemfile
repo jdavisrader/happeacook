@@ -43,6 +43,8 @@ gem 'cocoon'
 gem 'jquery-rails'
 gem "font-awesome-sass", "~> 6.1.1"
 gem 'ransack'
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
 
 # gem "select2-rails"
 

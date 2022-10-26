@@ -29,13 +29,13 @@ module RecipesHelper
 				hours = (total_time / 60).to_i
 				minutes = (total_time % 60).to_i
 				if hours > 1
-					total_time_descriptor = "#{hours} hr(s) #{minutes} min"
+					total_time_descriptor = "#{hours} hrs #{minutes} min"
 				else
 					total_time_descriptor = "#{hours} hr #{minutes} min"
 				end
 			else
 				total_time_description = "#{total_time.to_i} min"
 			end
-
 		end
+
 end

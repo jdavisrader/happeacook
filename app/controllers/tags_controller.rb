@@ -3,8 +3,19 @@ class TagsController < ApplicationController
 
   # GET /tags or /tags.json
   def index
-    @tags = Tag.all
+		@q = Tag.ransack(params[:q])
+		@tags = @q.result(distinct: true).page params[:page]
+    # @tags = Tag.all
   end
+
+	def tag_recipes
+		@tag = Tag.find(params[:tag_id])
+		@tag_recipes = @tag.recipes.page params[:per_page]
+	end
+
+	def list
+		@tags = Tag.all
+	end
 
   # GET /tags/1 or /tags/1.json
   def show
@@ -22,6 +33,7 @@ class TagsController < ApplicationController
   # POST /tags or /tags.json
   def create
     @tag = Tag.new(tag_params)
+		@tag.name = @tag.name.titleize
 
     respond_to do |format|
       if @tag.save
@@ -37,7 +49,7 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1 or /tags/1.json
   def update
     respond_to do |format|
-      if @tag.update(tag_params)
+      if @tag.update(name: params[:tag][:name].titleize)
         format.html { redirect_to tag_url(@tag), notice: "Tag was successfully updated." }
         format.json { render :show, status: :ok, location: @tag }
       else
@@ -65,6 +77,6 @@ class TagsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tag_params
-      params.require(:tag).permit(:name)
+      params.require(:tag).permit(:name, :tag_id, :page)
     end
 end

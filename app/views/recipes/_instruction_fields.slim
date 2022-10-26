@@ -1,10 +1,9 @@
 .nested-fields.instructions-sortable
 	= f.hidden_field :_destroy
 	= f.hidden_field :step_number, class: "position"
-	.row
-		.col-1
+	.row			
+		.col.input-group
 			.btn.btn-outline-secondary
 				i class="bi bi-grip-horizontal grip"
-		.col.input-group
 			= f.text_area :step, placeholder: "Step", class: "form-control"
 			= link_to_remove_association "", f, class: "remove_fields btn btn-outline-secondary bi bi-x-circle"

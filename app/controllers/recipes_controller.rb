@@ -1,16 +1,23 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
+	before_action :authenticate_user!, only: %i[ new edit create udpate destroy ]
 
   # GET /recipes or /recipes.json
   def index
 		@q = Recipe.ransack(params[:q])
-		@recipes = @q.result(distinct: false)
+		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page params[:page]
+		# @recipes = @q.result.paginate(page: params[:page], per_page: 5)
     # @recipes = Recipe.all
   end
 
   # GET /recipes/1 or /recipes/1.json
   def show
   end
+
+	def my_recipes
+		@q = Recipe.where(user_id: current_user.id).ransack(params[:q])
+		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page params[:page]
+	end
 
   # GET /recipes/new
   def new
@@ -27,17 +34,6 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
 		@recipe.user_id = current_user.id
-
-		total_time = total_time(recipe_params[:prep_time], recipe_params[:prep_time_descriptor], recipe_params[:cook_time], recipe_params[:cook_time_descriptor], recipe_params[:rest_time], recipe_params[:rest_time_descriptor])
-
-		if total_time > 60
-			@recipe.total_time = total_time/60
-			@recipe.total_time_descriptor = "hr"
-		else
-			@recipe.total_time = total_time
-			@recipe.total_time_descriptor = "min"
-		end
-
 
     respond_to do |format|
       if @recipe.save
@@ -89,21 +85,7 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step])
+      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :page, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step])
     end
-
-
-		def total_time(ptime, ptd, ctime, ctd, rtime, rtd)
-			if ptd == "hr"
-				ptime = ptime.to_f * 60
-			end
-			if ctd == "hr"
-				ctime = ctime.to_f * 60
-			end
-			if rtd == "hr"
-				rtime = rtime.to_f * 60
-			end
-			total_time = ptime.to_f + ctime.to_f + rtime.to_f
-		end
 
 end
