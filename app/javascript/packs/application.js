@@ -43,17 +43,27 @@ require("packs/recipes")
 // If you're using Turbolinks. Otherwise simply use: jQuery(function () {
 document.addEventListener("turbolinks:load", () => {
 		var sortIngredients = document.getElementById('sort-ingredients');
-		var sortable = Sortable.create(sortIngredients, {
+		var ingredientsSortable = Sortable.create(sortIngredients, {
 			animation: 150,
 			handle: '.grip',
-    	ghostClass: 'blue-background-class'
+    	ghostClass: 'blue-background-class',
+			filter: '#add-ingredients-button',
+			onMove: function(e) {
+		    return e.related.id !== 'add-ingredients-button';
+		  }
 		});
 
+
+
 		var sortInstructions = document.getElementById('sort-instructions');
-		var sortable = Sortable.create(sortInstructions, {
+		var instructionsSortable = Sortable.create(sortInstructions, {
 			animation: 150,
 			handle: '.grip',
-    	ghostClass: 'blue-background-class'
+    	ghostClass: 'blue-background-class',
+			filter: "#add-instructions-button",
+			onMove: function(e) {
+		    return e.related.id !== 'add-instructions-button';
+		  }
 		});
 
     // Both of these are from the Bootstrap 5 docs
