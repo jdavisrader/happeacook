@@ -6,8 +6,6 @@
 		= render 'search_form'
 
 	.row
-
-		/ = link_to 'New Recipe', new_recipe_path
 		- @recipes.each do |recipe|
 			= link_to recipe, class: "col-lg-4 no-decoration"
 				.recipe-box-container

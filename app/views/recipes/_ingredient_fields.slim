@@ -3,11 +3,9 @@
 	= f.hidden_field :order_number, class: "position"
 
 	.row
-		.col-1
+		.col.input-group
 			.btn.btn-outline-secondary
 				i class="bi bi-grip-horizontal grip"
-			/ = f.number_field :order_number, placeholder: "#", class: "form-control"
-		.col-4
 			= f.text_field :measurement, placeholder: "Measurement", class: "form-control"
 		.col.input-group
 			= f.text_field :name, placeholder: "Name", class: "form-control"

@@ -1,0 +1,26 @@
+
+p#notice
+	= notice
+
+h1 Tags
+
+.row
+	= render 'tag_search'
+
+
+
+table.table.table-hover
+  thead
+    tr
+      th Name
+      th
+
+  tbody
+     - @tags.each do |tag|
+      tr
+				td = tag.name
+				td = link_to 'Show Recipes', tag_recipes_path(tag)
+
+= paginate @tags, theme: 'bootstrap-5'
+
+= link_to 'New Tag', new_tag_path, class: "btn btn-primary"

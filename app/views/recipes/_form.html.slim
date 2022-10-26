@@ -1,6 +1,6 @@
 .container
 	= form_with model: @recipe, id: "recipe-form" do |f|
-		.row
+		.row.mb-3
 			.field.w-100
 				#form-recipe-name
 					=f.label :name
@@ -45,28 +45,27 @@
 					=f.label :calories
 				=f.text_field :calories, class: "form-control"
 
-		#recipe_ingredients
+		#recipe_ingredients.mb-4
 			fieldset
 				legend Ingredients
 
 				#sort-ingredients
 					= f.fields_for :ingredients, @recipe.ingredients.order(:order_number) do |ingredient|
 						= render "ingredient_fields", f: ingredient
-					.links
-						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary"
+					#add-ingredients-button.links
+						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary no-sort"
 
-		#recipe_instructions
-
+		#recipe_instructions.mb-4
 			fieldset
 				legend Instructions
 
 				#sort-instructions
 					= f.fields_for :instructions, @recipe.instructions.order(:step_number) do |instruction|
 						= render "instruction_fields", f: instruction
-					.links
-						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary"
+					#add-instructions-button.links
+						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary no-sort"
 
-		#recipe-tags
+		#recipe-tags.mb-5
 			fieldset
 				legend Tags
 
