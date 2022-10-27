@@ -49,7 +49,7 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1 or /tags/1.json
   def update
     respond_to do |format|
-      if @tag.update(name: params[:tag][:name].titleize)
+      if @tag.update(params)
         format.html { redirect_to tag_url(@tag), notice: "Tag was successfully updated." }
         format.json { render :show, status: :ok, location: @tag }
       else
