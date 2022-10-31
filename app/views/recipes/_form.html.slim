@@ -12,6 +12,16 @@
 				=f.text_area :description, class: "form-control"
 
 			.field
+				#recipe-image-upload
+					=f.label "Upload a picture"
+				=f.file_field :pictures, multiple: true
+
+			.field
+				#recipe-image-upload
+					=f.label "Upload a header"
+				=f.file_field :header
+
+			.field
 				#form-recipe-prep-time.input-group
 					=f.label :prep_time
 				.row
@@ -65,13 +75,19 @@
 					#add-instructions-button.links
 						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary no-sort"
 
-		#recipe-tags.mb-5
+		#recipe-tags
 			fieldset
 				legend Tags
 
 			.field
 				=f.select :tag_ids, Tag.all.map { |t| [t.name, t.id] }, {include_blank: false}, {:multiple => true, class: 'tag-multiple form-control'}
 
+		#original-recipe-photos.mb-5
+			fieldset
+				legend Original Recipe Photos
+
+			.field
+				=f.file_field :original_recipe_photos, multiple: true
 
 		.actions.mar-top-15
 			= f.submit class: "btn btn-outline-success", id: "recipe-submit"

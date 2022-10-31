@@ -9,18 +9,24 @@
 
 		/ = link_to 'New Recipe', new_recipe_path
 		- @recipes.each do |recipe|
-			= link_to recipe, class: "col-lg-4 no-decoration"
+			= link_to recipe, class: "col-lg-4 no-decoration mb-3"
 				.recipe-box-container
-					.recipe-name
-						= "#{recipe.name}"
+					.recipe-card-picture
+						- if recipe.header.attached?
+							= image_tag(recipe.header)
+						- else
+							= image_tag("no-recipe.jpeg")
+					.recipe-card-words.p-2
+						.recipe-name
+							= "#{recipe.name}"
 
-					.recipe-creator
-						= "By "
+						.recipe-creator
+							= "By "
 
-						b.span.recipe-creator-name
-							= "#{recipe.user.username}"
+							b.span.recipe-creator-name
+								= "#{recipe.user.username}"
 
-					.recipe-description
-						= "#{recipe.description.truncate(120, separator: ' ')}"
+						.recipe-description
+							= "#{recipe.description.truncate(120, separator: ' ')}"
 
 		= paginate @recipes, theme: 'bootstrap-5'
