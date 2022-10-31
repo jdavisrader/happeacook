@@ -3,6 +3,12 @@
 		.row
 			.col-sm-2
 			.col-lg-8
+				.recipe-pictures
+					- if @recipe.header.attached?
+						= image_tag @recipe.header
+					- else
+
+
 				h1.recipe-name-header
 					= @recipe.name
 
@@ -63,10 +69,22 @@
 
 
 
+				- if @recipe.original_recipe_photos.attached?
+					.row
+						.col-lg-12
+							div
+								= "Original Recipe Photos"
+							div
+								- @recipe.original_recipe_photos.each do |op|
+									= link_to image_tag(@recipe.original_recipe_as_thumbnail(op)), op, class: "me-1"
 
-						.recipe_links
-							-if user_signed_in? && @recipe.user_id == current_user.id
-								=link_to 'Edit |', edit_recipe_path(@recipe)
-							=link_to ' Back', recipes_path
+
+
+
+			.row
+				.recipe_links
+					-if user_signed_in? && @recipe.user_id == current_user.id
+						=link_to 'Edit |', edit_recipe_path(@recipe)
+					=link_to ' Back', recipes_path
 
 		.col-sm-2

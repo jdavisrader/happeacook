@@ -1,5 +1,9 @@
 class Recipe < ApplicationRecord
   belongs_to :user
+	before_save :titleize_name
+	has_many_attached :pictures
+	has_one_attached :header
+	has_many_attached :original_recipe_photos
 
 	has_many :ingredients, dependent: :destroy, inverse_of: :recipe
 	has_many :instructions, dependent: :destroy, inverse_of: :recipe
@@ -8,6 +12,16 @@ class Recipe < ApplicationRecord
 
 	accepts_nested_attributes_for :ingredients, :instructions, allow_destroy: true, reject_if: :all_blank
 	validates :name, presence:
+
+
+
+	def titleize_name
+		self.name = self.name.titleize
+	end
+
+	def original_recipe_as_thumbnail(op)
+		op.variant(resize_to_limit: [300, 300]).processed
+	end
 
 
 

@@ -9,11 +9,9 @@
 }
 
 .recipe-box-container{
-	padding: 15px;
-  border: 2px solid rgba(0,0,0,.15);
-  border-radius: 5px;
-	margin-bottom: 10px;
-	height: 160px;
+
+  border: 1px solid rgba(0,0,0,.15);
+	height: 310px;
 	color: black;
 	a:hover {
 	  color: green;
@@ -26,6 +24,12 @@
 
 .recipe-description{
 	font-size: 12px;
+	text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .recipe-creator-name{
@@ -63,4 +67,20 @@ a.remove_fields:hover{
 
 .recipe-info{
 	font-size: 12px;
+}
+
+.recipe-pictures{
+	img {
+		width: 100%;
+		height: 300px;
+		object-fit: cover;
+	}
+}
+
+.recipe-card-picture{
+	img{
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
 }
