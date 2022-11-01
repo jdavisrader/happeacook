@@ -26,7 +26,10 @@ test:
 
 production:
   <<: *default
-  database: happeacook_production
   host: localhost
-  username: happeacook
-  password: prodhappeacook
+  adapter: postgresql
+  encoding: utf8
+  database: happeacook_production
+  pool: 5
+  username: happeacookprod
+  password: DragonflyBossLukewarmBlankRavenUntrained

@@ -1,16 +1,23 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
+	before_action :authenticate_user!, only: %i[ new edit create udpate destroy ]
 
   # GET /recipes or /recipes.json
   def index
 		@q = Recipe.ransack(params[:q])
-		@recipes = @q.result(distinct: false)
+		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page params[:page]
+		# @recipes = @q.result.paginate(page: params[:page], per_page: 5)
     # @recipes = Recipe.all
   end
 
   # GET /recipes/1 or /recipes/1.json
   def show
   end
+
+	def my_recipes
+		@q = Recipe.where(user_id: current_user.id).ransack(params[:q])
+		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page params[:page]
+	end
 
   # GET /recipes/new
   def new
@@ -78,6 +85,7 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step])
+      params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :page, :header, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :name, :measurement, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step], pictures: [], original_recipe_photos: [])
     end
+
 end

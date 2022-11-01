@@ -1,16 +1,8 @@
 nav {
-	background-color: #9BC53D;
+
 
 	a {
 		text-decoration: none !important;
-	}
-
-	.navbar-nav {
-		flex-direction: row;
-	}
-
-	.navbar-item{
-		margin-left: 10px;
 	}
 
 	.navbar-brand{
@@ -18,6 +10,10 @@ nav {
 			color: #e55934;
 		}
 	}
+}
+
+.happeacook-nav{
+	background-color: #9BC53D;
 }
 
 footer {

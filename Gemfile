@@ -9,7 +9,9 @@ gem 'rails', '~> 6.1.7'
 # gem 'sqlite3', '~> 1.4'
 # use postgres as the database
 gem 'pg'
-gem 'net-smtp', '~> 0.2.1'
+gem 'net-smtp', '~> 0.2.1', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -37,12 +39,15 @@ gem 'devise'
 gem 'slim'
 # gem 'simple_form'
 gem 'cocoon'
-gem 'bootstrap', '~> 5.1', '>= 5.1.3'
+# gem 'bootstrap', '~> 5.1', '>= 5.1.3'
 gem 'jquery-rails'
 gem "font-awesome-sass", "~> 6.1.1"
 gem 'ransack'
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
+gem "image_processing", "~> 1.0"
 
-gem "select2-rails"
+# gem "select2-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

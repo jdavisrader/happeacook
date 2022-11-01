@@ -1,63 +1,93 @@
-#recipe-form
-	.container
-		= form_with model: @recipe do |f|
-			.row
-				.field.w-100
-					#form-recipe-name
-						=f.label :name
-					=f.text_field :name, class: "form-control"
+.container
+	= form_with model: @recipe, id: "recipe-form" do |f|
+		.row.mb-3
+			.field.w-100
+				#form-recipe-name
+					=f.label :name
+				=f.text_field :name, class: "form-control"
 
-				.field
-					#form-recipe-description
-						=f.label :description
-					=f.text_area :description, class: "form-control"
+			.field
+				#form-recipe-description
+					=f.label :description
+				=f.text_area :description, class: "form-control"
 
-				.field
-					#form-recipe-prep-time
-						=f.label :prep_time
-					=f.text_field :prep_time, class: "form-control"
+			/ .field
+			/ 	#recipe-image-upload
+			/ 		=f.label "Upload a picture"
+			/ 	=f.file_field :pictures, multiple: true
 
-				.field
-					#form-recipe-prep-time
-						=f.label :cook_time
-					=f.text_field :cook_time, class: "form-control"
+			.field
+				#recipe-image-upload
+					=f.label "Upload a Picture"
+				=f.file_field :header
 
-				.field
-					#form-recipe-prep-time
-						=f.label :rest_time
-					=f.text_field :rest_time, class: "form-control"
+			.field
+				#form-recipe-prep-time.input-group
+					=f.label :prep_time
+				.row
+					.col
+						=f.number_field :prep_time, step: 0.25, class: "form-control"
+					.col-3
+						=f.select :prep_time_descriptor, ["min", "hr"], {},  class: "form-select"
 
-				.field
-					#form-recipe-prep-time
-						=f.label :calories
-					=f.text_field :calories, class: "form-control"
+			.field
+				#form-recipe-prep-time
+					=f.label :cook_time
+				.row
+					.col
+						=f.number_field :cook_time, step: 0.25, class: "form-control"
+					.col-3
+						=f.select :cook_time_descriptor, ["min", "hr"], {},  class: "form-select"
 
-			#recipe_ingredients
-				fieldset
-					legend Ingredients
 
-					= f.fields_for :ingredients do |ingredient|
+			.field
+				#form-recipe-prep-time
+					=f.label :rest_time
+				.row
+					.col
+						=f.number_field :rest_time, step: 0.25, class: "form-control"
+					.col-3
+						=f.select :rest_time_descriptor, ["min", "hr"], {},  class: "form-select"
+
+
+			.field
+				#form-recipe-prep-time
+					=f.label :calories
+				=f.text_field :calories, class: "form-control"
+
+		#recipe_ingredients.mb-4
+			fieldset
+				legend Ingredients
+
+				#sort-ingredients
+					= f.fields_for :ingredients, @recipe.ingredients.order(:order_number) do |ingredient|
 						= render "ingredient_fields", f: ingredient
-					.links
-						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary"
+					#add-ingredients-button.links
+						= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary no-sort"
 
-			#recipe_instructions
+		#recipe_instructions.mb-4
+			fieldset
+				legend Instructions
 
-				fieldset
-					legend Instructions
-
-
+				#sort-instructions
 					= f.fields_for :instructions, @recipe.instructions.order(:step_number) do |instruction|
 						= render "instruction_fields", f: instruction
-					.links
-						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary"
+					#add-instructions-button.links
+						= link_to_add_association "Add Step", f, :instructions, class: "btn btn-outline-primary no-sort"
 
-			#recipe-tags
-				fieldset
-					legend Tags
-					.field
-						=f.select :tag_ids, Tag.all.map { |t| [t.name, t.id] }, {include_blank: false}, {:multiple => true, class: 'tag-multiple form-control'}
+		#recipe-tags
+			fieldset
+				legend Tags
 
+			.field
+				=f.select :tag_ids, Tag.all.map { |t| [t.name, t.id] }, {include_blank: false}, {:multiple => true, class: 'tag-multiple form-control'}
 
-			.actions.mar-top-15
-				= f.submit class: "btn btn-outline-success"
+		#original-recipe-photos.mb-5
+			fieldset
+				legend Original Recipe Photos
+
+			.field
+				=f.file_field :original_recipe_photos, multiple: true
+
+		.actions.mar-top-15
+			= f.submit class: "btn btn-outline-success", id: "recipe-submit"

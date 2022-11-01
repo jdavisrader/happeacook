@@ -1,8 +1,14 @@
 .recipe-page-container
 	.container
 		.row
-			.col-sm-3
-			.col-lg-6
+			.col-sm-2
+			.col-lg-8
+				.recipe-pictures
+					- if @recipe.header.attached?
+						= image_tag @recipe.header
+					- else
+
+
 				h1.recipe-name-header
 					= @recipe.name
 
@@ -19,7 +25,7 @@
 					=@recipe.description
 
 				.row
-					.container
+					.container.mb-2
 						- @recipe.tags.each do |tag|
 							span.badge.rounded-pill.bg-secondary.me-1
 								= "#{tag.name}"
@@ -32,16 +38,15 @@
 								= "Servings: #{@recipe.servings}"
 							- if @recipe.prep_time.present?
 								.recipe-info-detail
-									= "Prep Time: #{@recipe.prep_time.to_i}"
+									= "Prep Time: #{display_time(@recipe.prep_time)} #{@recipe.prep_time_descriptor}"
 							- if @recipe.cook_time.present?
 								.recipe-info-detail
-									= "Cook Time: #{@recipe.cook_time.to_i}"
+									= "Cook Time: #{display_time(@recipe.cook_time)} #{@recipe.cook_time_descriptor}"
 							- if @recipe.rest_time.present?
 								.recipe-info-detail
-									= "Rest Time: #{@recipe.rest_time.to_i}"
-							- if @recipe.total_time.present?
-								.recipe-info-detail
-									= "Total Time: #{@recipe.total_time.to_i}"
+									= "Rest Time: #{display_time(@recipe.rest_time)} #{@recipe.rest_time_descriptor}"
+							.recipe-info-detail
+								= "Total Time: #{total_time_display(@recipe.prep_time, @recipe.prep_time_descriptor, @recipe.cook_time, @recipe.cook_time_descriptor, @recipe.rest_time, @recipe.rest_time_descriptor)}"
 							- if @recipe.calories.present?
 								.recipe-info-detail
 									= "Calories: #{@recipe.calories}"
@@ -64,10 +69,22 @@
 
 
 
+				- if @recipe.original_recipe_photos.attached?
+					.row
+						.col-lg-12
+							div
+								= "Original Recipe Photos"
+							div
+								- @recipe.original_recipe_photos.each do |op|
+									= link_to image_tag(@recipe.original_recipe_as_thumbnail(op)), op, class: "me-1"
 
-						.recipe_links
-							-if user_signed_in? && @recipe.user_id == current_user.id
-								=link_to 'Edit |', edit_recipe_path(@recipe)
-							=link_to ' Back', recipes_path
 
-		.col-sm-3
+
+
+			.row
+				.recipe_links
+					-if user_signed_in? && @recipe.user_id == current_user.id
+						=link_to 'Edit |', edit_recipe_path(@recipe)
+					=link_to ' Back', recipes_path
+
+		.col-sm-2
