@@ -11,26 +11,42 @@
 .recipe-box-container{
 
   border: 1px solid rgba(0,0,0,.15);
-	height: 310px;
+	height: 100%;
 	color: black;
 	a:hover {
 	  color: green;
 	}
+	.recipe-name{
+		font-size: 20px;
+		text-overflow: ellipsis;
+	  overflow: hidden;
+	  display: -webkit-box !important;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
+	  white-space: normal;
+	}
+	.recipe-card-picture{
+		img{
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+		}
+	}
+	.recipe-description{
+		font-size: 12px;
+		text-overflow: ellipsis;
+	  overflow: hidden;
+	  display: -webkit-box !important;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
+	  white-space: normal;
+	}
+
 }
 
-.recipe-name{
-	font-size: 20px;
-}
 
-.recipe-description{
-	font-size: 12px;
-	text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  white-space: normal;
-}
+
+
 
 .recipe-creator-name{
 	text-decoration: bold;
@@ -73,14 +89,6 @@ a.remove_fields:hover{
 	img {
 		width: 100%;
 		height: 300px;
-		object-fit: cover;
-	}
-}
-
-.recipe-card-picture{
-	img{
-		width: 100%;
-		height: 200px;
 		object-fit: cover;
 	}
 }
