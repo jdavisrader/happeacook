@@ -42,7 +42,7 @@ set :repo_url, "git@github.com:jdavisrader/happeacook.git"
 
 
 # If using Digital Ocean's Ruby on Rails Marketplace framework, your username is 'rails'
-set :user,            'rails'
+set :user,            'jordanpi'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
@@ -91,11 +91,11 @@ namespace :deploy do
     on roles(:app) do
 
       # Update this to your branch name: master, main, etc. Here it's main
-      unless 'git rev-parse HEAD' == 'git rev-parse origin/master'
-        puts "WARNING: HEAD is not the same as origin/master"
-        puts "Run `git push` to sync changes."
-        exit
-      end
+      # unless 'git rev-parse HEAD' == 'git rev-parse origin/master'
+      #   puts "WARNING: HEAD is not the same as origin/master"
+      #   puts "Run `git push` to sync changes."
+      #   exit
+      # end
     end
   end
 
