@@ -69,7 +69,6 @@ set :branch,        :master
 # set :log_level,     :debug
 # set :keep_releases, 5
 
-append :linked_files, "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "public/uploads"
 
 ## Linked Files & Directories (Default None):
