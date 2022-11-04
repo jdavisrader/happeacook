@@ -125,3 +125,25 @@ end
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
 # kill -s SIGTERM pid   # Stop puma
+
+
+
+
+# [Unit]
+# Description=Puma HTTP Server for happeacook (production)
+# After=network.target
+#
+# [Service]
+# Type=simple
+# User=jordanpi
+# WorkingDirectory=/home/jordanpi/apps/happeacook/current
+# ExecStart=/home/jordanpi/.rbenv/bin/rbenv exec bundle exec puma -C /home/jordanpi/apps/happeacook/shared/puma.rb
+# ExecReload=/bin/kill -TSTP $MAINPID
+# StandardOutput=append:/home/jordanpi/apps/happeacook/current/log/puma.access.log
+# StandardError=append:/home/jordanpi/apps/happeacook/current/log/puma.error.log
+# Restart=always
+# RestartSec=1
+# SyslogIdentifier=puma
+#
+# [Install]
+# WantedBy=multi-user.target
