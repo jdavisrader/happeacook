@@ -51,7 +51,7 @@ set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :deploy_to,       "/home/#{fetch(:user)}/#{fetch(:application)}"
+set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
@@ -68,6 +68,8 @@ set :branch,        :master
 # set :format,        :pretty
 # set :log_level,     :debug
 # set :keep_releases, 5
+
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "public/uploads"
 
 ## Linked Files & Directories (Default None):
 # set :linked_files, %w{config/database.yml}
@@ -123,3 +125,25 @@ end
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
 # kill -s SIGTERM pid   # Stop puma
+
+
+
+
+# [Unit]
+# Description=Puma HTTP Server for happeacook (production)
+# After=network.target
+#
+# [Service]
+# Type=simple
+# User=jordanpi
+# WorkingDirectory=/home/jordanpi/apps/happeacook/current
+# ExecStart=/home/jordanpi/.rbenv/bin/rbenv exec bundle exec puma -C /home/jordanpi/apps/happeacook/shared/puma.rb
+# ExecReload=/bin/kill -TSTP $MAINPID
+# StandardOutput=append:/home/jordanpi/apps/happeacook/current/log/puma.access.log
+# StandardError=append:/home/jordanpi/apps/happeacook/current/log/puma.error.log
+# Restart=always
+# RestartSec=1
+# SyslogIdentifier=puma
+#
+# [Install]
+# WantedBy=multi-user.target
