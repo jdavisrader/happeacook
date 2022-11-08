@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  get 'users/index'
   resources :tags do
 		get '/recipes', to: 'tags#tag_recipes'
 		collection do
 			get :list
 		end
   end
+
+	resources :manage_users
 
   resources :instructions
   resources :ingredients

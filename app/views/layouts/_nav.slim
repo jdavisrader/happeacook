@@ -19,6 +19,16 @@ nav.navbar.navbar-expand-lg.happeacook-nav
 					.nav-link
 						=link_to "Categories", tags_path
 
+				-if user_signed_in? && current_user.super_user?
+					li.nav-item.dropdown
+						a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" Admin
+						ul.dropdown-menu
+							li.dropdown-item
+								= link_to 'Manage Tags', list_tags_path
+							li.dropdown-item
+								= link_to 'Manage Users', manage_users_path
+
+
 				li.nav-item.dropdown
 					a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" Account
 					ul.dropdown-menu
