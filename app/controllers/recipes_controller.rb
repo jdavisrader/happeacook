@@ -48,7 +48,7 @@ class RecipesController < ApplicationController
 
   # PATCH/PUT /recipes/1 or /recipes/1.json
   def update
-		if @recipe.user_id == current_user.id
+		if @recipe.user_id == current_user.id || current_user.super_user?
 	    respond_to do |format|
 	      if @recipe.update(recipe_params)
 	        format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
