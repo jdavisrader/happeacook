@@ -1,13 +1,3 @@
-
-
-Rails.application.configure do
-	config.active_storage.service = :production
-end
-
-
-
-
-
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
