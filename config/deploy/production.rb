@@ -1,5 +1,9 @@
 
-config.active_storage.service = :production
+
+Rails.application.configure do
+	config.active_storage.service = :production
+end
+
 
 
 
