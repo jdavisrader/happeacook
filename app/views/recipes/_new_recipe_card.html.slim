@@ -1,0 +1,19 @@
+= link_to recipe, class: "col-lg-3 no-decoration mb-3"
+	.recipe-box-wrapper
+		.recipe-card-picture
+			- if recipe.header.attached?
+				= image_tag(recipe.header)
+			- else
+				= image_tag("no-recipe.jpeg")
+		.recipe-card-words.pt-1.pe-1
+			.recipe-name
+				= "#{recipe.name}"
+
+			.recipe-creator
+				= "By "
+
+				b.span.recipe-creator-name
+					= "#{recipe.user.username}"
+
+			.recipe-description
+				= "#{recipe.description}"

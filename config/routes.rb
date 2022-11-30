@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :recipes do
   	collection do
   		get :my_recipes
+			get :discover
   	end
   end
   devise_for :users

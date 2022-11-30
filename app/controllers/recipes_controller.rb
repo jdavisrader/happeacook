@@ -19,6 +19,20 @@ class RecipesController < ApplicationController
 		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page params[:page]
 	end
 
+	def discover
+		@q = Recipe.ransack(params[:q])
+		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page(params[:page]).per(4)
+
+		@breakfast = Tag.find_by(name: "Breakfast")
+		@dinner = Tag.find_by(name: "Dinner")
+		@sides = Tag.find_by(name: "Side Dishes")
+		@snacks = Tag.find_by(name: "Snacks")
+		@bread = Tag.find_by(name: "Bread")
+		@dessert = Tag.find_by(name: "Dessert")
+		@drinks = Tag.find_by(name: "Drinks")
+		@christmas = Tag.find_by(name: "Christmas")
+	end
+
   # GET /recipes/new
   def new
     @recipe = Recipe.new
