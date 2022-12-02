@@ -3,11 +3,12 @@
 		h1 Recipes
 
 	.row
-		= render 'search_form'
+		.col-lg-6
+			= render 'discover_search_form'
 
 	.row
 		- @recipes.each do |recipe|
-			= render 'recipe_card', recipe: recipe
+			= render 'new_recipe_card', recipe: recipe
 
 
 		= paginate @recipes, theme: 'bootstrap-5'
