@@ -1,25 +1,32 @@
 nav {
-
-
 	a {
 		text-decoration: none !important;
 	}
-
 	.navbar-brand{
 		a {
 			color: #e55934;
 		}
 	}
 }
-
-.happeacook-nav{
-	background-color: #9BC53D;
+.nav-item{
+	a {
+		color: #233D4D;
+		text-decoration: none !important;
+	}
+	a:hover{
+		color: white;
+	}
 }
+.happeacook-nav{
+	background-color: #A1C181;
+}
+
+
 
 footer {
 	height: 50px;
 	margin-top: 15px;
-	background-color: #9BC53D;
+	background-color: #A1C181;
 }
 
 .content{
@@ -43,7 +50,4 @@ footer {
 
 .no-decoration{
 	text-decoration: none;
-	a:hover {
-		background-color: green;
-	}
 }

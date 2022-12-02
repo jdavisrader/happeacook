@@ -1,0 +1,110 @@
+.container.mt-5
+	.row
+		.col-sm-1
+
+		.col-lg-10
+			.row.wrapper
+				.col-lg-6
+					.content-header
+						h1 Happea Cook
+				.col-lg-6
+					.content-link
+						= render 'discover_search_form'
+			.row
+				=render "discover_carousel"
+
+
+			.row.mt-4
+				.wrapper
+					.content-header
+						= "Categories"
+					.content-link
+						=link_to "See All >", tags_path
+
+			.row.mt-1
+				.col-lg-6
+					.row
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@breakfast), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/breakfast.png")
+									.category-content
+										= "Breakfast"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@dinner), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/dinner.png")
+									.category-content
+										= "Dinner"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@sides), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/side-dishes.png")
+									.category-content
+										= "Side Dishes"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@snacks), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/snacks.png")
+									.category-content
+										= "Snacks"
+
+
+				.col-lg-6
+					.row
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@bread), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/bread.png")
+									.category-content
+										= "Bread"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@dessert), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/dessert.png")
+									.category-content
+										= "Dessert"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@drinks), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/drinks.png")
+									.category-content
+										= "Drinks"
+
+						.col-sm-3.mb-2
+							=link_to tag_recipes_path(@christmas), class: "no-decoration"
+								.category-card
+									.category-icon
+										=image_tag("categoryIcons/christmas.png")
+									.category-content
+										= "Christmas"
+
+			.row.mt-5.wrapper
+				.col-lg-6
+					.content-header
+						= "Discover Recipes"
+				.col-lg-6
+
+
+
+
+			.row.mt-3
+				- @recipes.each do |recipe|
+					= render 'new_recipe_card', recipe: recipe
+
+
+				= paginate @recipes, theme: 'bootstrap-5'
+
+		.col-sm-1
