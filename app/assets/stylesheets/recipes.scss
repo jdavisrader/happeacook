@@ -91,20 +91,32 @@ a.remove_fields:hover{
 
 .carousel-card{
 	height: 300px;
-	background-color: aliceblue;
+	background-color: #619B8A;
 	position: relative;
+	img {
+		width: 100%;
+    height: 100%;
+    object-fit: cover;
+	}
 }
-.carousel-title{
+.carousel-title-background{
 	position: absolute;
   bottom: 0px;
   height: 100px;
   width: 100%;
-	font-size: 32px;
-	padding-left: 25px;
-  color: white;
-	background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0) );
-  vertical-align: middle;
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) );
+	.carousel-title{
+		font-size: 32px;
+	  color: white;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		display: -webkit-box !important;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		white-space: normal;
+	}
 }
+
 
 .wrapper{
 	display: flex;

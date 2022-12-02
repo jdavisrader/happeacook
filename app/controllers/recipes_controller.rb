@@ -23,6 +23,10 @@ class RecipesController < ApplicationController
 		@q = Recipe.ransack(params[:q])
 		@recipes = @q.result(distinct: true).includes(:ingredients, :tags).page(params[:page]).per(4)
 
+		count = Recipe.count
+		random_offset = rand(count)
+		@carousel = Recipe.offset(random_offset).first(5)
+
 		@breakfast = Tag.find_by(name: "Breakfast")
 		@dinner = Tag.find_by(name: "Dinner")
 		@sides = Tag.find_by(name: "Side Dishes")

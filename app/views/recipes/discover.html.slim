@@ -3,11 +3,16 @@
 		.col-sm-1
 
 		.col-lg-10
+			.row.wrapper
+				.col-lg-6
+					.content-header
+						h1 Happea Cook
+				.col-lg-6
+					.content-link
+						= render 'discover_search_form'
 			.row
-				#discover-carousel
-					.carousel-card
-						.carousel-title
-							= "Hello World"
+				=render "discover_carousel"
+
 
 			.row.mt-4
 				.wrapper
@@ -91,8 +96,7 @@
 					.content-header
 						= "Discover Recipes"
 				.col-lg-6
-					.content-link
-						= render 'discover_search_form'
+
 
 
 

@@ -1,0 +1,29 @@
+#discover-carousel.carousel.slide data-bs-ride="carousel"
+	.carousel-inner
+		- @carousel.each_with_index do |recipe, i|
+			-if i == 1
+				=link_to recipe_path(recipe), class: "carousel-item carousel-card active"
+					- if recipe.header.attached?
+						= image_tag(recipe.header)
+					- else
+						= image_tag("empty-plate.jpg")
+					.carousel-title-background.pt-4.ps-5.pe-5
+						.carousel-title
+							= "#{recipe.name}"
+			-else
+				=link_to recipe_path(recipe), class: "carousel-item carousel-card"
+					- if recipe.header.attached?
+						= image_tag(recipe.header)
+					- else
+						= image_tag("empty-plate.jpg")
+					.carousel-title-background.pt-4.ps-5.pe-5
+						.carousel-title
+							= "#{recipe.name}"
+
+		button.carousel-control-prev type="button" data-bs-target="#discover-carousel" data-bs-slide="prev"
+			span.carousel-control-prev-icon aria-hidden="true"
+			span.visually-hidden Previous
+
+		button.carousel-control-next type="button" data-bs-target="#discover-carousel" data-bs-slide="next"
+			span.carousel-control-next-icon aria-hidden="true"
+			span.visually-hidden Next
