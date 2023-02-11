@@ -1,12 +1,9 @@
 .nested-fields.ingredients-sortable
 	= f.hidden_field :_destroy
 	= f.hidden_field :order_number, class: "position"
-
 	.row
 		.col.input-group
 			.btn.btn-outline-secondary.grip
 				i class="bi bi-grip-horizontal"
-			= f.text_field :measurement, placeholder: "Measurement", class: "form-control"
-		.col.input-group
-			= f.text_field :name, placeholder: "Name", class: "form-control"
+			= f.text_field :ingredient, placeholder: "Ingredient", class: "form-control"
 			= link_to_remove_association "", f, class: "remove_fields btn btn-outline-secondary bi bi-x-circle"

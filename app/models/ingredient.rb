@@ -3,7 +3,7 @@ class Ingredient < ApplicationRecord
 	before_save :titleize_name
 
 	def titleize_name
-		self.name = self.name.titleize
+		self.ingredient = self.ingredient.titleize
 	end
 
 end

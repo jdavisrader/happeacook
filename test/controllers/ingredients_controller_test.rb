@@ -17,7 +17,7 @@ class IngredientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ingredient" do
     assert_difference('Ingredient.count') do
-      post ingredients_url, params: { ingredient: { measurement: @ingredient.measurement, name: @ingredient.name, order_number: @ingredient.order_number, recipe_id: @ingredient.recipe_id } }
+      post ingredients_url, params: { ingredient: { ingredient: @ingredient.ingredient, order_number: @ingredient.order_number, recipe_id: @ingredient.recipe_id } }
     end
 
     assert_redirected_to ingredient_url(Ingredient.last)
