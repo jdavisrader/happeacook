@@ -15,10 +15,12 @@ Rails.application.routes.draw do
   	collection do
   		get :my_recipes
 			get :discover
+			get :import_recipe
+			post :import
   	end
   end
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-	root 'recipes#index'
+	root 'recipes#discover'
 end

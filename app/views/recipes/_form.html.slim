@@ -58,8 +58,8 @@
 		#recipe_ingredients.mb-4
 			fieldset
 				legend Ingredients
-
 				#sort-ingredients
+					- debugger
 					= f.fields_for :ingredients, @recipe.ingredients.order(:order_number) do |ingredient|
 						= render "ingredient_fields", f: ingredient
 					#add-ingredients-button.links

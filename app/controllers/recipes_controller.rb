@@ -37,6 +37,49 @@ class RecipesController < ApplicationController
 		@christmas = Tag.find_by(name: "Christmas")
 	end
 
+	def import_recipe
+	end
+
+	def import
+		doc = Nokogiri::HTML(URI.open(params["import"]["name"]))
+		js = doc.at('script[type="application/ld+json"]').text
+		jsParse = JSON[js]
+
+		@recipe = Recipe.new
+		@recipe.ingredients.build
+		@recipe.instructions.build
+		@recipe.user_id = current_user.id
+
+		if jsParse["name"].present?
+			@recipe.name = jsParse["name"]
+			@recipe.description = jsParse["description"]
+			@recipe.servings = jsParse["recipeYield"].first.to_i
+			@recipe.prep_time = ActiveSupport::Duration.parse(jsParse["prepTime"])
+			@recipe.cook_time = ActiveSupport::Duration.parse(jsParse["cookTime"])
+			@recipe.calories = jsParse["nutrition"]["calories"]
+
+			#Ingredientes
+			jsParse["recipeIngredient"].each_with_index do |ingredient, index|
+				@recipe.ingredients.build(name: ingredient, order_number: index)
+				puts ingredient
+			end
+		else
+			@recipe.name = jsParse[0]["name"]
+			@recipe.description = jsParse[0]["description"]
+			@recipe.servings = jsParse[0]["recipeYield"].first.to_i
+			@recipe.prep_time = ActiveSupport::Duration.parse(jsParse[0]["prepTime"])
+			@recipe.cook_time = ActiveSupport::Duration.parse(jsParse[0]["cookTime"])
+			@recipe.calories = jsParse[0]["nutrition"]["calories"]
+
+			# Ingredientes
+			jsParse[0]["recipeIngredient"].each_with_index do |ingredient, index|
+				@recipe.ingredients.build(name: ingredient, order_number: index)
+				puts ingredient
+			end
+		end
+		debugger
+	end
+
   # GET /recipes/new
   def new
     @recipe = Recipe.new
