@@ -24,6 +24,10 @@
 				p
 					=@recipe.description
 
+				-if !@recipe.original_url.nil?
+					.original-url
+						= link_to "Original Recipe", @recipe.original_url, target: "_blank"
+
 				.row
 					.container.mb-2
 						- @recipe.tags.each do |tag|
@@ -85,7 +89,8 @@
 					.recipe_links
 						-if user_signed_in?
 							-if @recipe.user_id == current_user.id || current_user.super_user?
-								=link_to 'Edit |', edit_recipe_path(@recipe)
+								= link_to 'Edit | ', edit_recipe_path(@recipe)
+								= link_to 'Delete |', @recipe, method: :delete, data: { confirm: 'Are you sure?' } 
 						=link_to ' Back', recipes_path
 
 		.col-sm-2

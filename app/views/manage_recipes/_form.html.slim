@@ -1,0 +1,32 @@
+= form_with model: @user, url: manage_user_path do |form|
+  - if @user.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      ul
+        - user.errors.each do |error|
+          li = error.full_message
+
+
+  .field
+		.form-label
+    	= form.label :username
+		= form.text_field :username, class: "form-control"
+
+  .field
+		.form-label
+    	= form.label :email
+		= form.text_field :email, class: "form-control"
+
+  .field
+		.form-label
+    	= form.label :super_user
+		.form-check.form-switch
+			= form.check_box :super_user, class: "form-check-input", type: "checkbox"
+			/
+			/ - if current_user.id == @user.id
+			/ 	= form.check_box :super_user, class: "form-check-input", type: "checkbox",  disabled: true
+			/ - else
+			/ 	= form.check_box :super_user, class: "form-check-input", type: "checkbox"
+
+  .actions
+    = form.submit class: "btn btn-primary"
