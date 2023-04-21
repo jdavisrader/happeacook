@@ -44,40 +44,52 @@ class RecipesController < ApplicationController
 		doc = Nokogiri::HTML(URI.open(params["import"]["name"]))
 		js = doc.at('script[type="application/ld+json"]').text
 		jsParse = JSON[js]
+		
+		jsParse = base_recipe(jsParse)
 
-		@recipe = Recipe.new
-		@recipe.ingredients.build
-		@recipe.instructions.build
-		@recipe.user_id = current_user.id
+		if !jsParse["recipeIngredient"].nil?
+			@recipe = Recipe.new
+			@recipe.user_id = current_user.id
 
-		if jsParse["name"].present?
-			@recipe.name = jsParse["name"]
-			@recipe.description = jsParse["description"]
-			@recipe.servings = jsParse["recipeYield"].first.to_i
-			@recipe.prep_time = ActiveSupport::Duration.parse(jsParse["prepTime"])
-			@recipe.cook_time = ActiveSupport::Duration.parse(jsParse["cookTime"])
-			@recipe.calories = jsParse["nutrition"]["calories"]
+			@recipe.name = jsParse["name"].nil? ? "" : jsParse["name"]
+			@recipe.description = jsParse["description"].nil? ? "" : jsParse["description"]
+			@recipe.servings = jsParse["recipeYield"].nil? ? "" : jsParse["recipeYield"].first.to_i
+			@recipe.prep_time = jsParse["prepTime"].nil? ? "" : ActiveSupport::Duration.parse(jsParse["prepTime"]).in_minutes
+			@recipe.prep_time_descriptor = "min"
+			@recipe.cook_time = jsParse["cookTime"].nil? ? "" : ActiveSupport::Duration.parse(jsParse["cookTime"]).in_minutes
+			@recipe.cook_time_descriptor = "min"
+
+			@recipe.calories = deep_find_value_with_key(jsParse, "calories"),nil? ? "" : deep_find_value_with_key(jsParse, "calories")
+
+			# @recipe.calories = jsParse["nutrition"]["calories"].nil? ? "" : jsParse["nutrition"]["calories"]
+			@recipe.original_url = params["import"]["name"]
+
+			
+			# Tentative Image importer
+			# downloaded_image = jsParse["image"]["url"].nil? ? open(jsParse["image"][0]) : open(jsParse["image"]["url"])
+			# @recipe.header.attach(io: downloaded_image, filename: "foo.jpg")
 
 			#Ingredientes
 			jsParse["recipeIngredient"].each_with_index do |ingredient, index|
-				@recipe.ingredients.build(name: ingredient, order_number: index)
-				puts ingredient
+				@recipe.ingredients.build(ingredient: ingredient, order_number: index)
 			end
-		else
-			@recipe.name = jsParse[0]["name"]
-			@recipe.description = jsParse[0]["description"]
-			@recipe.servings = jsParse[0]["recipeYield"].first.to_i
-			@recipe.prep_time = ActiveSupport::Duration.parse(jsParse[0]["prepTime"])
-			@recipe.cook_time = ActiveSupport::Duration.parse(jsParse[0]["cookTime"])
-			@recipe.calories = jsParse[0]["nutrition"]["calories"]
 
-			# Ingredientes
-			jsParse[0]["recipeIngredient"].each_with_index do |ingredient, index|
-				@recipe.ingredients.build(name: ingredient, order_number: index)
-				puts ingredient
+			#Instructions
+			jsParse["recipeInstructions"].each_with_index do |instruction, index|
+				@recipe.instructions.build(step: instruction["text"], step_number: index)
 			end
 		end
-		debugger
+
+		respond_to do |format|
+			if @recipe.present? && @recipe.save
+			  format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
+			  format.json { render :show, status: :created, location: @recipe }
+			else
+				format.html { redirect_to recipes_url, alert: "Unable to import Recipe. No recipe found" }
+				format.json { head :no_content }
+			end
+		end
+		
 	end
 
   # GET /recipes/new
@@ -148,5 +160,53 @@ class RecipesController < ApplicationController
     def recipe_params
       params.require(:recipe).permit(:name, :user_id, :description, :servings, :prep_time, :prep_time_descriptor, :cook_time, :cook_time_descriptor, :rest_time, :rest_time_descriptor, :total_time, :total_time_descriptor, :calories, :page, :header, :tag_list, :tag, {tag_ids: []}, :tag_ids, :ingredient_id, ingredients_attributes: [:_destroy, :id, :ingredient, :order_number], instructions_attributes: [:_destroy, :id, :step_number, :step], pictures: [], original_recipe_photos: [])
     end
+
+	def deep_find_value_with_key(data, desired_key)
+		if data.kind_of?(Array)
+			data.each do |value|
+				if found = deep_find_value_with_key(value, desired_key)
+					return found
+				end
+			end
+		elsif data.kind_of?(Hash)
+			if data.key?(desired_key)
+				data[desired_key]
+			else
+				data.each do |key, val|
+					if found = deep_find_value_with_key(val, desired_key)
+						return found
+					end
+				end
+			end
+		end
+	end
+
+	def base_recipe(data)
+		if data.is_a?(Hash)
+			data.each do |key, value|
+				if key == "@type" 
+					if value.is_a?(Array)
+						value.each do |item|
+							if item == "Recipe"
+								return data
+							end
+						end
+					elsif value == "Recipe"
+						return data
+					end
+
+				elsif value.is_a?(Hash) || value.is_a?(Array)
+					found = base_recipe(value)
+					return found unless found.nil?
+				end
+			end
+		elsif data.is_a?(Array)
+			data.each do |item|
+				found = base_recipe(item)
+				return found unless found.nil?
+			end
+		end
+		nil
+	end
 
 end

@@ -7,7 +7,7 @@ class Recipe < ApplicationRecord
 
 	has_many :ingredients, dependent: :destroy, inverse_of: :recipe
 	has_many :instructions, dependent: :destroy, inverse_of: :recipe
-	has_many :recipe_tags
+	has_many :recipe_tags, dependent: :destroy
 	has_many :tags, through: :recipe_tags
 
 	accepts_nested_attributes_for :ingredients, :instructions, allow_destroy: true, reject_if: :all_blank

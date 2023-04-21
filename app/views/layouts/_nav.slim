@@ -13,9 +13,13 @@ nav.navbar.navbar-expand-lg.happeacook-nav
 					.nav-link
 						=link_to "Recipes", recipes_path
 				-if user_signed_in?
-					li.nav-item
-						.nav-link
-							=link_to "New Recipe", new_recipe_path
+					li.nav-item.dropdown
+						a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" New Recipe
+						ul.dropdown-menu
+							li.dropdown-item
+								= link_to 'Create Your Own', new_recipe_path
+							li.dropdown-item
+								= link_to 'Import', import_recipe_recipes_path
 				li.nav-item
 					.nav-link
 						=link_to "Categories", tags_path
@@ -29,6 +33,8 @@ nav.navbar.navbar-expand-lg.happeacook-nav
 									= link_to 'Manage Tags', list_tags_path
 								li.dropdown-item
 									= link_to 'Manage Users', manage_users_path
+								li.dropdown-item
+									= link_to 'Manage Recipes', manage_recipes_path
 
 
 				li.nav-item.dropdown

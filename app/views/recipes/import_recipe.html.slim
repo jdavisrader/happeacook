@@ -1,3 +1,8 @@
-= form_for :import, url: "import" do |form|
-  = form.url_field :name
-  = form.submit
+.import-recipe-form
+  = form_for :import, url: "import" do |form|
+    .row
+      .col-sm-2
+      .col.input-group
+        = form.url_field :name, class: "form-control"
+        = form.submit class: "btn btn-outline-success"
+      .col-sm-2
