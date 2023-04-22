@@ -13,11 +13,14 @@
 					= @recipe.name
 
 				.recipe-creator
-					= "By "
 					- if @recipe.user_id.nil?
-						= "Nobody"
+						= "By Nobody"
+					-elsif !@recipe.imported_recipe.nil?
+						= "Imported by "
+						b.span.recipe-creator-name
+							= "#{@recipe.user.username}"
 					-else
-
+						= "By "
 						b.span.recipe-creator-name
 							= "#{@recipe.user.username}"
 
