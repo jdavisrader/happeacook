@@ -45,37 +45,39 @@ class RecipesController < ApplicationController
 		js = doc.at('script[type="application/ld+json"]').text
 		jsParse = JSON[js]
 		
-		jsParse = base_recipe(jsParse)
+		recipe_from_import = base_recipe(jsParse)
 
-		if !jsParse["recipeIngredient"].nil?
+		if !recipe_from_import.nil?
 			@recipe = Recipe.new
 			@recipe.user_id = current_user.id
 
-			@recipe.name = jsParse["name"].nil? ? "" : jsParse["name"]
-			@recipe.description = jsParse["description"].nil? ? "" : jsParse["description"]
-			@recipe.servings = jsParse["recipeYield"].nil? ? "" : jsParse["recipeYield"].first.to_i
-			@recipe.prep_time = jsParse["prepTime"].nil? ? "" : ActiveSupport::Duration.parse(jsParse["prepTime"]).in_minutes
+			@recipe.name = deep_find_value_with_key(recipe_from_import, "name").nil? ? "" : deep_find_value_with_key(recipe_from_import, "name")
+			@recipe.description = deep_find_value_with_key(recipe_from_import, "description").nil? ? "" : deep_find_value_with_key(recipe_from_import, "description")
+			@recipe.servings = deep_find_value_with_key(recipe_from_import, "recipeYield").nil? ? "" : deep_find_value_with_key(recipe_from_import, "recipeYield").first.to_i
+			@recipe.prep_time = deep_find_value_with_key(recipe_from_import, "prepTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "prepTime")).in_minutes
 			@recipe.prep_time_descriptor = "min"
-			@recipe.cook_time = jsParse["cookTime"].nil? ? "" : ActiveSupport::Duration.parse(jsParse["cookTime"]).in_minutes
+			@recipe.cook_time = deep_find_value_with_key(recipe_from_import, "cookTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "cookTime")).in_minutes
 			@recipe.cook_time_descriptor = "min"
 
-			@recipe.calories = deep_find_value_with_key(jsParse, "calories"),nil? ? "" : deep_find_value_with_key(jsParse, "calories")
+			@recipe.calories = deep_find_value_with_key(recipe_from_import, "calories"),nil? ? "" : deep_find_value_with_key(recipe_from_import, "calories")
 
-			# @recipe.calories = jsParse["nutrition"]["calories"].nil? ? "" : jsParse["nutrition"]["calories"]
+
 			@recipe.original_url = params["import"]["name"]
 
+			original_author = deep_find_value_with_key(deep_find_value_with_key(recipe_from_import, "author"), "name")
+			debugger
 			
 			# Tentative Image importer
-			# downloaded_image = jsParse["image"]["url"].nil? ? open(jsParse["image"][0]) : open(jsParse["image"]["url"])
+			# downloaded_image = recipe_from_import["image"]["url"].nil? ? open(recipe_from_import["image"][0]) : open(recipe_from_import["image"]["url"])
 			# @recipe.header.attach(io: downloaded_image, filename: "foo.jpg")
 
 			#Ingredientes
-			jsParse["recipeIngredient"].each_with_index do |ingredient, index|
+			deep_find_value_with_key(recipe_from_import, "recipeIngredient").each_with_index do |ingredient, index|
 				@recipe.ingredients.build(ingredient: ingredient, order_number: index)
 			end
 
 			#Instructions
-			jsParse["recipeInstructions"].each_with_index do |instruction, index|
+			deep_find_value_with_key(recipe_from_import, "recipeInstructions").each_with_index do |instruction, index|
 				@recipe.instructions.build(step: instruction["text"], step_number: index)
 			end
 		end
@@ -194,7 +196,6 @@ class RecipesController < ApplicationController
 					elsif value == "Recipe"
 						return data
 					end
-
 				elsif value.is_a?(Hash) || value.is_a?(Array)
 					found = base_recipe(value)
 					return found unless found.nil?
