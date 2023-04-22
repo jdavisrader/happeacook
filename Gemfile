@@ -46,6 +46,9 @@ gem 'ransack'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
 gem "image_processing", "~> 1.0"
+gem 'open-uri'
+gem 'nokogiri'
+gem 'json-ld'
 
 # gem "select2-rails"
 
