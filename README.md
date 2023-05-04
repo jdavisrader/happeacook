@@ -30,7 +30,14 @@ cap production deploy
 
 on the server
 in the config directory remove the credentials file
+
+```
 rm credentials.yml
+```
+
+```
+EDITOR=nano rails credentials:edit
+```
 
 run these commands
 ```
