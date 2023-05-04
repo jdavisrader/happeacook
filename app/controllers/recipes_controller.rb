@@ -41,61 +41,67 @@ class RecipesController < ApplicationController
 	end
 
 	def import
-		doc = Nokogiri::HTML(URI.open(params["import"]["name"]))
-		js = doc.at('script[type="application/ld+json"]').text
-		jsParse = JSON[js]
-		
-		recipe_from_import = base_recipe(jsParse)
+		begin 
+			doc = Nokogiri::HTML(URI.open(params["name"]))
+			js = doc.at('script[type="application/ld+json"]').text
+			jsParse = JSON[js]
 
-		if !recipe_from_import.nil?
-			@recipe = Recipe.new
-			@recipe.user_id = current_user.id
+			recipe_from_import = base_recipe(jsParse)
 
-			@recipe.name = deep_find_value_with_key(recipe_from_import, "name").nil? ? "" : deep_find_value_with_key(recipe_from_import, "name")
-			@recipe.description = deep_find_value_with_key(recipe_from_import, "description").nil? ? "" : deep_find_value_with_key(recipe_from_import, "description")
-			@recipe.servings = deep_find_value_with_key(recipe_from_import, "recipeYield").nil? ? "" : deep_find_value_with_key(recipe_from_import, "recipeYield").first.to_i
-			@recipe.prep_time = deep_find_value_with_key(recipe_from_import, "prepTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "prepTime")).in_minutes
-			@recipe.prep_time_descriptor = "min"
-			@recipe.cook_time = deep_find_value_with_key(recipe_from_import, "cookTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "cookTime")).in_minutes
-			@recipe.cook_time_descriptor = "min"
+			if !recipe_from_import.nil?
+				@recipe = Recipe.new
+				@recipe.user_id = current_user.id
 
-			@recipe.calories = deep_find_value_with_key(recipe_from_import, "calories"),nil? ? "" : deep_find_value_with_key(recipe_from_import, "calories")
+				@recipe.name = deep_find_value_with_key(recipe_from_import, "name").nil? ? "" : deep_find_value_with_key(recipe_from_import, "name")
+				@recipe.description = deep_find_value_with_key(recipe_from_import, "description").nil? ? "" : deep_find_value_with_key(recipe_from_import, "description")
+				@recipe.servings = deep_find_value_with_key(recipe_from_import, "recipeYield").nil? ? "" : deep_find_value_with_key(recipe_from_import, "recipeYield").first.to_i
+				@recipe.prep_time = deep_find_value_with_key(recipe_from_import, "prepTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "prepTime")).in_minutes
+				@recipe.prep_time_descriptor = "min"
+				@recipe.cook_time = deep_find_value_with_key(recipe_from_import, "cookTime").nil? ? "" : ActiveSupport::Duration.parse(deep_find_value_with_key(recipe_from_import, "cookTime")).in_minutes
+				@recipe.cook_time_descriptor = "min"
 
-
-			@recipe.original_url = params["import"]["name"]
-			@recipe.imported_recipe = true
+				@recipe.calories = deep_find_value_with_key(recipe_from_import, "calories"),nil? ? "" : deep_find_value_with_key(recipe_from_import, "calories")
 
 
-			# original_author = deep_find_value_with_key(deep_find_value_with_key(recipe_from_import, "author"), "name")
+				@recipe.original_url = params["name"]
+				@recipe.imported_recipe = true
 
-			
-			# Tentative Image importer
-			# downloaded_image = recipe_from_import["image"]["url"].nil? ? open(recipe_from_import["image"][0]) : open(recipe_from_import["image"]["url"])
-			# if !downloaded_image.nil?
-			# 	@recipe.header.attach(io: downloaded_image, filename: "foo.jpg")
-			# end
 
-			#Ingredientes
-			deep_find_value_with_key(recipe_from_import, "recipeIngredient").each_with_index do |ingredient, index|
-				@recipe.ingredients.build(ingredient: ingredient, order_number: index)
+				# original_author = deep_find_value_with_key(deep_find_value_with_key(recipe_from_import, "author"), "name")
+
+				
+				# Tentative Image importer
+				# downloaded_image = recipe_from_import["image"]["url"].nil? ? open(recipe_from_import["image"][0]) : open(recipe_from_import["image"]["url"])
+				# if !downloaded_image.nil?
+				# 	@recipe.header.attach(io: downloaded_image, filename: "foo.jpg")
+				# end
+
+				#Ingredientes
+				deep_find_value_with_key(recipe_from_import, "recipeIngredient").each_with_index do |ingredient, index|
+					@recipe.ingredients.build(ingredient: ingredient, order_number: index)
+				end
+
+				#Instructions
+				deep_find_value_with_key(recipe_from_import, "recipeInstructions").each_with_index do |instruction, index|
+					@recipe.instructions.build(step: instruction["text"], step_number: index)
+				end
 			end
 
-			#Instructions
-			deep_find_value_with_key(recipe_from_import, "recipeInstructions").each_with_index do |instruction, index|
-				@recipe.instructions.build(step: instruction["text"], step_number: index)
+			respond_to do |format|
+				if @recipe.present? && @recipe.save
+					format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
+					format.json { render :show, status: :created, location: @recipe }
+				else
+					format.html { redirect_to recipes_url, alert: "Unable to import Recipe. No recipe found" }
+					format.json { head :no_content }
+				end
 			end
-		end
-
-		respond_to do |format|
-			if @recipe.present? && @recipe.save
-			  format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
-			  format.json { render :show, status: :created, location: @recipe }
-			else
-				format.html { redirect_to recipes_url, alert: "Unable to import Recipe. No recipe found" }
+		rescue => e
+			respond_to do |format|
+				format.html { redirect_to recipes_url, alert: "Unable to import Recipe. Import not allowed on host website" }
 				format.json { head :no_content }
 			end
 		end
-		
 	end
 
 	# GET /recipes/new
