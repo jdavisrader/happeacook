@@ -1,12 +1,12 @@
 .import-recipe-form
-
   .row 
     .col-sm-2
     .col 
       h1 Import Recipe From URL
       
     .col-sm-2
-  = form_for :import, url: "import" do |form|
+    / = form_with model: @user, url: manage_user_path do |form|
+  = form_with model: @recipe, url: import_recipes_path do |form|
     .row
       .col-sm-2
       .col.input-group
