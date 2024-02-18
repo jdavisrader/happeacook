@@ -61,18 +61,20 @@
 				.row
 					.col-lg-12
 						.recipe_ingredients
-							= "Ingredients"
+							h5
+								= "Ingredients"
 							ul
 								- @recipe.ingredients.order(:order_number).each do |ingredient|
 									/ .recipe_ingredient_name
-									li
+									li.recipe_list_items
 										="#{ingredient.ingredient}"
 
 						.recipe_instructions
-							= "Instructions"
+							h5
+								= "Instructions"
 							ol
 								- @recipe.instructions.order(:step_number).each do |instruction|
-									li = "#{instruction.step}"
+									li.recipe_list_items = "#{instruction.step}"
 
 
 
