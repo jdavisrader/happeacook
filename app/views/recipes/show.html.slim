@@ -57,7 +57,11 @@
 							- if @recipe.calories.present?
 								.recipe-info-detail
 									= "Calories: #{@recipe.calories}"
-
+				.row
+					.col-lg-12 
+						label.switch
+							input.checkbox
+							span.slider.round
 				.row
 					.col-lg-4
 						.recipe_ingredients
@@ -99,3 +103,6 @@
 						=link_to ' Back', recipes_path
 
 		.col-sm-2
+
+javascript:
+	
