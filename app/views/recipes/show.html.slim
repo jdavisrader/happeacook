@@ -57,6 +57,13 @@
 							- if @recipe.calories.present?
 								.recipe-info-detail
 									= "Calories: #{@recipe.calories}"
+				.row
+					.col-lg-12 
+						.form-check.form-switch
+							input#wakeLockToggle.form-check-input type="checkbox" role="switch" 
+							label.form-check-label.recipe-info for="wakeLockToggle"
+								= "Cook Mode (Prevent your screen from going dark)"
+
 
 				.row
 					.col-lg-4
@@ -99,3 +106,45 @@
 						=link_to ' Back', recipes_path
 
 		.col-sm-2
+
+javascript:
+	// Initialize wake lock variable
+	let wakeLock = null;
+
+	// Function to request wake lock
+	async function requestWakeLock() {
+		try {
+			wakeLock = await navigator.wakeLock.request('screen');
+			console.log('Screen wake lock is active');
+		} catch (error) {
+			console.error('Failed to acquire wake lock:', error);
+		}
+	}
+
+	// Function to release wake lock
+	async function releaseWakeLock() {
+		if (wakeLock !== null) {
+			try {
+				await wakeLock.release();
+				wakeLock = null;
+				console.log('Screen wake lock has been released');
+			} catch (error) {
+				console.error('Failed to release wake lock:', error);
+			}
+		}
+	}
+
+	// Event listener for the toggle switch
+	document.getElementById('wakeLockToggle').addEventListener('change', async (event) => {
+		if (event.target.checked) {
+			await requestWakeLock();
+		} else {
+			await releaseWakeLock();
+		}
+	});
+
+	// Clean up wake lock on page unload
+	window.addEventListener('unload', async () => {
+		await releaseWakeLock();
+	});
+	
