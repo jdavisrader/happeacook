@@ -23,8 +23,3 @@ function setInstructionOrder(){
 		}
 	}
 };
-
-
-function testFunction(){
-	console.log("Hello there general Kenobi");
-};
