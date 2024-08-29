@@ -106,9 +106,3 @@ document.addEventListener("turbolinks:load", () => {
 			$('#recipe-form').submit();
 		})
 })
-
-
-function setCookMode(){
-	var wakeSwitch = document.getElementById("flexSwitchCheckDefault")
-	console.log("hello")
-};
